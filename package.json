@@ -1,0 +1,19 @@
+{
+    "name" : "throttler-express",
+    "main" : "./lib/throttle.coffee",
+    "description" : "Express middleware for throttling requests",
+    "version" : "0.0.1",
+    "scripts":{"test":"make test"},
+    "devDependencies": {
+       "mocha": "1.9.0",
+       "should": "*",
+       "sinon": "~1.5.0"
+    },
+    "dependencies" : {
+        "coffee-script" : "~1.4"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/scraperwiki/throttler-express.git"
+    }
+}
