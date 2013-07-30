@@ -11,6 +11,8 @@ exports.throttle = (getIdentifier, timeout = 1000) ->
       next()
       cache[identifier] = now
     else
-      next new Error("Throttled")
+      error = new Error("Throttled")
+      error.status = 429 # Too Many Requests
+      next error
 
   return throttleInner

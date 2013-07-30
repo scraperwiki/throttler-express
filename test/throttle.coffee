@@ -22,7 +22,9 @@ describe 'Throttle', ->
 
       
       next.firstCall.calledWith().should.be.true
-      next.secondCall.calledWith(new Error("Throttled")).should.be.true
+      error = new Error("Throttled")
+      error.status = 429
+      next.secondCall.calledWith(error).should.be.true
 
   context 'Multiple calls (after time elapsed)', ->
     it 'allows the call', ->
