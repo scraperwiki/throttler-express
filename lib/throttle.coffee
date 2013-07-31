@@ -8,11 +8,9 @@ exports.throttle = (getIdentifier, timeout = 1000) ->
     now = new Date()
     remaining = timeout - (now - previous)
     if remaining <= 0
-      next()
       cache[identifier] = now
+      next()
     else
-      error = new Error("Throttled")
-      error.status = 429 # Too Many Requests
-      next error
+      resp.send 429, JSON.stringify error: "Throttled"
 
   return throttleInner
