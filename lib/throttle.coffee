@@ -1,7 +1,7 @@
 exports.throttle = (getIdentifier, timeout = 1000) ->
   cache = {}
   throttleInner = (req, resp, next) ->
-    identifier = getIdentifier(arguments)
+    identifier = getIdentifier.apply null, arguments
 
     previous = cache[identifier] || 0
 
