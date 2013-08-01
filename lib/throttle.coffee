@@ -1,16 +1,16 @@
-exports.throttle = (getIdentifier, timeout = 1000) ->
-  cache = {}
+exports.throttle = (getKey, timeout = 1000) ->
+  throttled = {}
+
   throttleInner = (req, resp, next) ->
-    identifier = getIdentifier.apply null, arguments
+    key = getKey.apply null, arguments
+    if throttled[key]
+      return resp.send 429, JSON.stringify error: "Throttled"
 
-    previous = cache[identifier] || 0
+    throttled[key] = true
+    setTimeout =>
+      delete throttled[key]
+    , timeout
 
-    now = new Date()
-    remaining = timeout - (now - previous)
-    if remaining <= 0
-      cache[identifier] = now
-      next()
-    else
-      resp.send 429, JSON.stringify error: "Throttled"
+    next()
 
   return throttleInner
